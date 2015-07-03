@@ -35,19 +35,10 @@ treeMethods.contains = function(target){
 			}
 		});
 
-		/*if( node.children.length > 0){
-			if ( node.children[0].value === target ){
-				check = true;
-			} 
-		} else if (node.children[0].children.length > 0 ){
-			_.each(node.children[0].children, function(child){
-				return search(target, child);
-			});
-		}*/
 	}
 
 	search(target, this);
-	
+
 	return check;
 };
 
