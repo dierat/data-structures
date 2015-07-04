@@ -5,6 +5,7 @@ var BinarySearchTree = function(value){
   	right: undefined
   };
 
+
   tree.insert = function(value){
     var newTree = BinarySearchTree(value);
 
@@ -26,6 +27,7 @@ var BinarySearchTree = function(value){
 
     searchAndInsert(newTree, tree);
   }
+
 
   tree.contains = function(value){
   	var wasFound = false;
@@ -53,9 +55,11 @@ var BinarySearchTree = function(value){
   	return wasFound;
   }
 
-  tree.depthFirstLog = function(){
 
+  tree.depthFirstLog = function(){
+    
   }
+
 
   return tree;
 };
