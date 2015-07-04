@@ -9,7 +9,6 @@ var BinarySearchTree = function(value){
     var newTree = BinarySearchTree(value);
 
     var searchAndInsert = function(newTree, currenTree){
-      // see if newTree's value is less than currenTree's value
       if (newTree.value < currenTree.value){
         if (currenTree.left === undefined){
     	  currenTree.left = newTree;
