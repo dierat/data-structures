@@ -56,8 +56,20 @@ var BinarySearchTree = function(value){
   }
 
 
-  tree.depthFirstLog = function(){
+  tree.depthFirstLog = function(func){
     
+  	var recursive = function(treeInput, func){
+  	  func(treeInput.value);
+  	  if (treeInput.left !== undefined){
+  	  	recursive(treeInput.left, func);
+  	  }
+  	  if (treeInput.right !== undefined){
+  	  	recursive(treeInput.right, func);
+  	  }
+  	}
+
+  	recursive(tree, func);
+
   }
 
 
