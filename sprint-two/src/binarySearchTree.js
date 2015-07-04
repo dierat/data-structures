@@ -28,7 +28,29 @@ var BinarySearchTree = function(value){
   }
 
   tree.contains = function(value){
+  	var wasFound = false;
 
+  	var search = function(value, treeInput){
+  	  var treeInput = treeInput || tree;
+	  if (treeInput.left !== undefined){
+	    if (treeInput.left.value === value){
+	    	wasFound = true;
+	    }
+	  }
+	    
+	  if (treeInput.right !== undefined){
+	  	if (treeInput.right.value === value){
+	  		wasFound = true;
+	  	}
+	  }
+
+      if (treeInput.left !== undefined){ search(value, treeInput.left); }
+      if (treeInput.right !== undefined){ search(value, treeInput.right); }
+  	};
+
+  	search(value, tree);
+
+  	return wasFound;
   }
 
   tree.depthFirstLog = function(){
