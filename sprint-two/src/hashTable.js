@@ -5,17 +5,12 @@ var HashTable = function(){
 
 HashTable.prototype.insert = function(k, v){
   var bucketIndex = getIndexBelowMaxForKey(k, this._limit);
-  // call this.retrieve() to retrieve existing bucket
-  var retrieve = this._storage.get(bucketIndex);
-  // check result for undefined
-  if ( retrieve === undefined ){
-    // if undefined set result as object
-    retrieve = {};
+  var currentBucket = this._storage.get(bucketIndex);
+  if ( currentBucket === undefined ){
+    currentBucket = {};
   }
-  // if defined add key: value pair to exisiting object
-  retrieve[k] = v;
-  // call this.set() to place inside storage at bucketIndex
-  this._storage.set(bucketIndex, retrieve);
+  currentBucket[k] = v;
+  this._storage.set(bucketIndex, currentBucket);
 };
 
 HashTable.prototype.retrieve = function(k){
@@ -35,11 +30,8 @@ HashTable.prototype.retrieve = function(k){
 
 HashTable.prototype.remove = function(k){
   var bucketIndex = getIndexBelowMaxForKey(k, this._limit);
-   // retrieve bucket
    var retrieve = this._storage.get(bucketIndex);
-   // setting obj key: value to null
    retrieve[k] = null;
-   // set back into storage
    this._storage.set(bucketIndex, retrieve);
 };
 
