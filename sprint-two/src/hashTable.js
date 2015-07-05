@@ -3,43 +3,66 @@ var HashTable = function(){
   this._storage = LimitedArray(this._limit);
 };
 
+
 HashTable.prototype.insert = function(k, v){
   var bucketIndex = getIndexBelowMaxForKey(k, this._limit);
   var currentBucket = this._storage.get(bucketIndex);
   if ( currentBucket === undefined ){
-    currentBucket = {};
+    currentBucket = [];
+    this._storage.set(bucketIndex, currentBucket);
   }
-  currentBucket[k] = v;
+
+  var wasFound = false;
+
+  _.each(currentBucket, function(val, key){
+    if (key === k){
+      currentBucket[key] = v;
+      wasFound = true;
+    }
+  });
+
+  if (!wasFound){
+  	currentBucket.push([k,v]);
+  }
+
   this._storage.set(bucketIndex, currentBucket);
 };
+
 
 HashTable.prototype.retrieve = function(k){
 
   var bucketIndex = getIndexBelowMaxForKey(k, this._limit);
 
-  var object = this._storage.get(bucketIndex);
+  var currentBucket = this._storage.get(bucketIndex);
 
-
-  if ( object === undefined ){
-  	return object;
+  if ( currentBucket === undefined ){
+  	return currentBucket;
   } else {
-  	return object[k];
+    var result;
+  	_.each(currentBucket, function(tuple){
+  	  if (tuple[0] === k) {
+  	  	result = tuple[1];
+  	  }
+  	});
+  	return result;
   }
 
 };
 
+
 HashTable.prototype.remove = function(k){
   var bucketIndex = getIndexBelowMaxForKey(k, this._limit);
-   var retrieve = this._storage.get(bucketIndex);
-   retrieve[k] = null;
-   this._storage.set(bucketIndex, retrieve);
+  var currentBucket = this._storage.get(bucketIndex);
+
+  _.each(currentBucket, function(tuple){
+    if (tuple[0] === k) {
+  	  tuple[1] = null;
+  	}
+  });
+
+  this._storage.set(bucketIndex, currentBucket);
 };
 
- /*
-
-this._storage = [  [ [],[] ], [ ['key1','val1'],['key2','val2'] ]  ]
-
- */
 
 /*
  * Complexity: What is the time complexity of the above functions?
